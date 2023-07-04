@@ -1,0 +1,84 @@
+[
+    {
+        "id": 2,
+        "sex": "M",
+        "city": null,
+        "about": "Tony is shopping. John has free time. Tony is walking. ",
+        "email": "pvgg7@---k--.net",
+        "login": "Erick5",
+        "address": "60 North Rocky Clarendon Street",
+        "birth_date": null,
+        "coordinates": {
+            "lat": 16.0,
+            "lon": 84.0
+        },
+        "create_date": "2018-02-24",
+        "displayname": "Abraham",
+        "reg_confirmed": 0
+    },
+    {
+        "id": 3,
+        "sex": "F",
+        "city": "Rochester",
+        "about": "Anne has free time. Anne has free time. John is walking. John bought new car. Tony has free time. ",
+        "email": "iips.opcwen@g---x-.com",
+        "login": "Janice11",
+        "address": null,
+        "birth_date": "2009-10-11",
+        "coordinates": {
+            "lat": 16.0,
+            "lon": 84.0
+        },
+        "create_date": "2018-05-17",
+        "displayname": "Charlotte",
+        "reg_confirmed": 0
+    },
+    {
+        "id": 4,
+        "sex": "F",
+        "city": "Jacksonville",
+        "about": "Tony bought new car. Anne bought new car. Anne is walking. John has free time. John has free time. ",
+        "email": "mtgq3@c-fs-k.net",
+        "login": "Gretchen2",
+        "address": "38 West Rocky Hague Road",
+        "birth_date": "2009-03-27",
+        "coordinates": null,
+        "create_date": "2016-03-19",
+        "displayname": "Lynn",
+        "reg_confirmed": 1
+    },
+    {
+        "id": 5,
+        "sex": "M",
+        "city": "Anchorage",
+        "about": "Anne is walking. Anne has free time. John is shopping. Tony bought new car. Tony has free time. ",
+        "email": "mjck243@m--o--.net",
+        "login": "Lawanda",
+        "address": "72 East Rocky Nobel Avenue",
+        "birth_date": "2008-12-21",
+        "coordinates": {
+            "lat": 16.0,
+            "lon": 84.0
+        },
+        "create_date": "2018-05-16",
+        "displayname": "Erich",
+        "reg_confirmed": 1
+    },
+    {
+        "id": 6,
+        "sex": "F",
+        "city": "Albuquerque",
+        "about": "John is shopping. Anne is walking. John has free time. Anne bought new car. John has free time. ",
+        "email": "nmpsj@----vb.org",
+        "login": "Robbie7",
+        "address": "60 East Green First Drive",
+        "birth_date": "2013-12-14",
+        "coordinates": {
+            "lat": 16.0,
+            "lon": 84.0
+        },
+        "create_date": "2004-05-09",
+        "displayname": "Dominick",
+        "reg_confirmed": 0
+    }
+]

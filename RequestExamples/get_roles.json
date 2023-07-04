@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "name": "Technical Marketing",
+        "active": 0,
+        "description": "Anne bought new car. Anne bought new car. Tony bought new car. Anne has free time. Anne is walking. "
+    },
+    {
+        "id": 2,
+        "name": "Prepaid Customer",
+        "active": 1,
+        "description": "John bought new car. Anne is shopping. Tony bought new car. Tony bought new car. Tony has free time. "
+    },
+    {
+        "id": 3,
+        "name": "National Marketing",
+        "active": 1,
+        "description": "John has free time. Tony is shopping. "
+    },
+    {
+        "id": 4,
+        "name": "National Marketing",
+        "active": 0,
+        "description": "John bought new car. Anne is walking. John bought new car. Anne has free time. John has free time. "
+    },
+    {
+        "id": 5,
+        "name": "Business Customer",
+        "active": 1,
+        "description": "Anne bought new car. Anne is shopping. "
+    },
+    {
+        "id": 6,
+        "name": "Prepaid Customer",
+        "active": 0,
+        "description": "Anne bought new car. Tony has free time. Tony bought new car. Tony has free time. Anne bought new car. "
+    },
+    {
+        "id": 7,
+        "name": "Corporate Customer",
+        "active": 0,
+        "description": "Tony bought new car. John bought new car. Tony has free time. "
+    },
+    {
+        "id": 8,
+        "name": "International Marketing",
+        "active": 1,
+        "description": "John bought new car. John is walking. John bought new car. John bought new car. Tony is walking. "
+    },
+    {
+        "id": 9,
+        "name": "Technical",
+        "active": 0,
+        "description": "Anne bought new car. John is shopping. Tony is shopping. Anne bought new car. John is walking. "
+    },
+    {
+        "id": 10,
+        "name": "International Sales",
+        "active": 0,
+        "description": "John bought new car. Tony is walking. John has free time. John has free time. Anne has free time. "
+    },
+    {
+        "id": 11,
+        "name": "Web",
+        "active": 1,
+        "description": "John is walking. Anne bought new car. Tony is shopping. John has free time. Tony is walking. "
+    },
+    {
+        "id": 12,
+        "name": "Technical Customer",
+        "active": 0,
+        "description": "Tony is shopping. Anne is walking. "
+    },
+    {
+        "id": 13,
+        "name": "National Marketing",
+        "active": 0,
+        "description": "John has free time. Tony is walking. "
+    },
+    {
+        "id": 14,
+        "name": "Web Assistant",
+        "active": 0,
+        "description": "Anne bought new car. Anne bought new car. Anne is shopping. Anne has free time. Tony bought new car. "
+    },
+    {
+        "id": 15,
+        "name": "National Marketing",
+        "active": 0,
+        "description": "Anne is shopping. Anne is walking. John bought new car. John bought new car. John has free time. "
+    },
+    {
+        "id": 19,
+        "name": "Administrator",
+        "active": 0,
+        "description": "A test role"
+    }
+]

@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="MySql" id="Project-10f7" database="MySql" >
+	<schema name="tripadvisor" >
+		<table name="catering_images" row_count="337" spec="" >
+			<comment><![CDATA[Изображения в рамках общепита]]></comment>
+			<column name="catering_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор обещпита]]></comment>
+			</column>
+			<column name="image_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор изображения]]></comment>
+			</column>
+			<index name="pk_catering_images" unique="PRIMARY_KEY" >
+				<column name="catering_id" />
+				<column name="image_id" />
+			</index>
+			<index name="fk_catering_images_images" unique="NORMAL" >
+				<column name="image_id" />
+			</index>
+			<fk name="fk_catering_images_caterings" to_schema="tripadvisor" to_table="caterings" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="catering_id" pk="id" />
+			</fk>
+			<fk name="fk_catering_images_images" to_schema="tripadvisor" to_table="images" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="image_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="caterings" row_count="120" spec="" >
+			<comment><![CDATA[Предпрития обещственного питания]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификтор общепита]]></comment>
+			</column>
+			<column name="tour_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор тура]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="300" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование общепита]]></comment>
+			</column>
+			<column name="description" type="TINYTEXT" jt="-1" >
+				<comment><![CDATA[Описание общепита]]></comment>
+			</column>
+			<column name="visit_date" type="DATE" jt="91" mandatory="y" >
+				<defo><![CDATA[curdate()]]></defo>
+				<comment><![CDATA[Дата посещения]]></comment>
+			</column>
+			<column name="rating" type="SMALLINT" jt="5" mandatory="y" unsigned="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Рейтинг заведения]]></comment>
+			</column>
+			<column name="price" type="DECIMAL" length="10" decimal="0" jt="3" >
+				<comment><![CDATA[Стоимость покушать]]></comment>
+			</column>
+			<index name="pk_caterings" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_caterings_tours" unique="NORMAL" >
+				<column name="tour_id" />
+			</index>
+			<fk name="fk_caterings_tours" to_schema="tripadvisor" to_table="tours" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="comfort_images" row_count="337" spec="" >
+			<comment><![CDATA[Изображения в рамках ночлега]]></comment>
+			<column name="comfort_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор ночлега]]></comment>
+			</column>
+			<column name="image_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор изображения]]></comment>
+			</column>
+			<index name="pk_comfort_images" unique="PRIMARY_KEY" >
+				<column name="comfort_id" />
+				<column name="image_id" />
+			</index>
+			<index name="fk_comfort_images_images" unique="NORMAL" >
+				<column name="image_id" />
+			</index>
+			<fk name="fk_comfort_images_comforts" to_schema="tripadvisor" to_table="comforts" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="comfort_id" pk="id" />
+			</fk>
+			<fk name="fk_comfort_images_images" to_schema="tripadvisor" to_table="images" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="image_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="comforts" row_count="80" spec="" >
+			<comment><![CDATA[Информация о месте проживания/отдыха/ночлеге]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор места отдыха]]></comment>
+			</column>
+			<column name="tour_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор тура/поездки]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="500" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование места отдыха]]></comment>
+			</column>
+			<column name="price" type="DECIMAL" length="10" decimal="0" jt="3" >
+				<comment><![CDATA[Цена за проижвание]]></comment>
+			</column>
+			<column name="price_info" type="DECIMAL" length="10" decimal="0" jt="3" >
+				<comment><![CDATA[Распределение суммы оплаты]]></comment>
+			</column>
+			<column name="info" type="VARCHAR" length="4000" jt="12" >
+				<comment><![CDATA[Информация о месте проживания]]></comment>
+			</column>
+			<column name="url" type="VARCHAR" length="500" jt="12" >
+				<comment><![CDATA[Ссылка на сайт места проживания]]></comment>
+			</column>
+			<index name="pk_comforts" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_comforts_tour_id" unique="NORMAL" >
+				<column name="tour_id" />
+			</index>
+			<fk name="fk_comforts_tour_id" to_schema="tripadvisor" to_table="tours" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$areas" row_count="225" spec="" >
+			<comment><![CDATA[Справочник районов]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор района]]></comment>
+			</column>
+			<column name="fullname" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Полное наименование района]]></comment>
+			</column>
+			<column name="shortname" type="VARCHAR" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Краткое наименовангие района]]></comment>
+			</column>
+			<column name="region_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор региона]]></comment>
+			</column>
+			<index name="pk_dic$areas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_dic$areas_dic$regions" unique="NORMAL" >
+				<column name="region_id" />
+			</index>
+			<fk name="fk_dic$areas_dic$regions" to_schema="tripadvisor" to_table="dic$regions" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="region_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$cities" row_count="337" spec="" >
+			<comment><![CDATA[Справочник городов]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор района]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование города]]></comment>
+			</column>
+			<column name="type_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Тип города]]></comment>
+			</column>
+			<column name="area_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор района]]></comment>
+			</column>
+			<index name="pk_dic$cities" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_dic$cities_dic$areas" unique="NORMAL" >
+				<column name="area_id" />
+			</index>
+			<index name="fk_dic$cities_dic$city_types" unique="NORMAL" >
+				<column name="type_id" />
+			</index>
+			<fk name="fk_dic$cities_dic$areas" to_schema="tripadvisor" to_table="dic$areas" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="area_id" pk="id" />
+			</fk>
+			<fk name="fk_dic$cities_dic$city_types" to_schema="tripadvisor" to_table="dic$city_types" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="type_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$city_types" row_count="15" spec="" >
+			<comment><![CDATA[Типы городов/населённых пунктов]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор типа города/населённого пункта]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="10" jt="12" mandatory="y" >
+				<comment><![CDATA[Тип]]></comment>
+			</column>
+			<index name="pk_dic$city_types" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$countries" row_count="30" spec="" >
+			<comment><![CDATA[Справочник стран]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор страны]]></comment>
+			</column>
+			<column name="fullname" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Полное наименование страны]]></comment>
+			</column>
+			<column name="shortname" type="VARCHAR" length="50" jt="12" mandatory="y" >
+				<comment><![CDATA[Краткое наименование страны]]></comment>
+			</column>
+			<index name="pk_dic$countries" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$regions" row_count="150" spec="" >
+			<comment><![CDATA[Справочник регионов]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор региона]]></comment>
+			</column>
+			<column name="fullname" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Полное наименование региона]]></comment>
+			</column>
+			<column name="shortname" type="VARCHAR" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Краткое наименовангие региона]]></comment>
+			</column>
+			<column name="country_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор страны]]></comment>
+			</column>
+			<index name="pk_dic$regions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_dic$regions_dic$countries" unique="NORMAL" >
+				<column name="country_id" />
+			</index>
+			<fk name="fk_dic$regions_dic$countries" to_schema="tripadvisor" to_table="dic$countries" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="country_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$roles" row_count="16" spec="" >
+			<comment><![CDATA[Справочник видов прав]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор права]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="255" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование права]]></comment>
+			</column>
+			<column name="description" type="VARCHAR" length="2000" jt="12" >
+				<comment><![CDATA[Описание права]]></comment>
+			</column>
+			<column name="active" type="TINYINT" jt="-6" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Признак возможности использования права]]></comment>
+			</column>
+			<index name="pk_dic$roles" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$sight_categories" row_count="20" spec="" >
+			<comment><![CDATA[Категории видов достопримечательностей]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор категории]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="200" jt="12" mandatory="y" >
+				<comment><![CDATA[Название категории]]></comment>
+			</column>
+			<index name="pk_dic$sight_categories" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$street" row_count="505" spec="" >
+			<comment><![CDATA[Справочник улиц]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор улицы]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование улицы]]></comment>
+			</column>
+			<column name="type_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Тип улицы]]></comment>
+			</column>
+			<column name="city_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор города]]></comment>
+			</column>
+			<index name="pk_dic$street" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_dic$street_dic$cities" unique="NORMAL" >
+				<column name="city_id" />
+			</index>
+			<index name="fk_dic$street_dic$street_types" unique="NORMAL" >
+				<column name="type_id" />
+			</index>
+			<fk name="fk_dic$street_dic$cities" to_schema="tripadvisor" to_table="dic$cities" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="city_id" pk="id" />
+			</fk>
+			<fk name="fk_dic$street_dic$street_types" to_schema="tripadvisor" to_table="dic$street_types" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="type_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=506 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$street_types" row_count="10" spec="" >
+			<comment><![CDATA[Типы улиц]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор типа улицы]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="10" jt="12" mandatory="y" >
+				<comment><![CDATA[Тип]]></comment>
+			</column>
+			<index name="pk_dic$street_types" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="dic$tour_statuses" row_count="6" spec="" >
+			<comment><![CDATA[Справочник статусов для туров]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор статуса для тура]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Тип статуса тура]]></comment>
+			</column>
+			<column name="active" type="TINYINT" jt="-6" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Признак активности (доступности)]]></comment>
+			</column>
+			<index name="pk_dic$tour_statuses" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="event_comments" row_count="0" spec="" >
+			<comment><![CDATA[Комментарии к событиям]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор комментария]]></comment>
+			</column>
+			<column name="event_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор события]]></comment>
+			</column>
+			<column name="comment" type="VARCHAR" length="4000" jt="12" mandatory="y" >
+				<comment><![CDATA[Текст комментария]]></comment>
+			</column>
+			<column name="create_date" type="DATE" jt="91" mandatory="y" >
+				<defo><![CDATA[curdate()]]></defo>
+				<comment><![CDATA[Дата создания комментария]]></comment>
+			</column>
+			<column name="owner_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Автор комментария]]></comment>
+			</column>
+			<column name="parent_id" type="BIGINT" jt="-5" unsigned="y" >
+				<comment><![CDATA[Идентификатор предыдущего комментария (только для ответов на комментарий) для построения дерева]]></comment>
+			</column>
+			<index name="pk_event_comments" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_event_comments_event_id" unique="NORMAL" >
+				<column name="event_id" />
+			</index>
+			<index name="fk_event_comments_owner_id" unique="NORMAL" >
+				<column name="owner_id" />
+			</index>
+			<fk name="fk_event_comments_event_id" to_schema="tripadvisor" to_table="events" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+			<fk name="fk_event_comments_owner_id" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="owner_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="event_location" row_count="0" spec="" >
+			<comment><![CDATA[Местонахождение события]]></comment>
+			<column name="event_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор события]]></comment>
+			</column>
+			<column name="address" type="VARCHAR" length="250" jt="12" >
+				<comment><![CDATA[Адрес события]]></comment>
+			</column>
+			<column name="coordinates" type="BOOLEAN" length="1" jt="16" >
+				<comment><![CDATA[Координаты широты и долготы]]></comment>
+			</column>
+			<column name="detail" type="VARCHAR" length="2000" jt="12" >
+				<comment><![CDATA[Дополнительная информация о локации]]></comment>
+			</column>
+			<index name="pk_event_location" unique="PRIMARY_KEY" >
+				<column name="event_id" />
+			</index>
+			<fk name="fk_event_location_event_id" to_schema="tripadvisor" to_table="events" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="event_members" row_count="0" spec="" >
+			<comment><![CDATA[Участники события]]></comment>
+			<column name="event_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Событие]]></comment>
+			</column>
+			<column name="user_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Участник]]></comment>
+			</column>
+			<index name="pk_event_members" unique="PRIMARY_KEY" >
+				<column name="event_id" />
+				<column name="user_id" />
+			</index>
+			<index name="fk_event member_id" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_event member_id" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_event_members_event" to_schema="tripadvisor" to_table="events" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="event_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="event_types" row_count="0" spec="" >
+			<comment><![CDATA[Справочник типов событий]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="300" jt="12" >
+				<comment><![CDATA[Наименование]]></comment>
+			</column>
+			<column name="description" type="TINYTEXT" jt="-1" mandatory="y" >
+				<comment><![CDATA[Описание]]></comment>
+			</column>
+			<column name="create_date" type="DATE" jt="91" mandatory="y" >
+				<defo><![CDATA[curdate()]]></defo>
+				<comment><![CDATA[Дата создания]]></comment>
+			</column>
+			<column name="is_default" type="BOOLEAN" length="1" jt="16" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+				<comment><![CDATA[Признак по умолчанию]]></comment>
+			</column>
+			<index name="pk_event_types" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="events" row_count="0" spec="" >
+			<comment><![CDATA[Таблица событий]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор]]></comment>
+			</column>
+			<column name="event" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование события]]></comment>
+			</column>
+			<column name="description" type="TINYTEXT" jt="-1" mandatory="y" >
+				<comment><![CDATA[Содержанание]]></comment>
+			</column>
+			<column name="create_date" type="DATE" jt="91" mandatory="y" >
+				<defo><![CDATA[curdate()]]></defo>
+				<comment><![CDATA[Дата создания]]></comment>
+			</column>
+			<column name="owner_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Владелец (кто создал)]]></comment>
+			</column>
+			<column name="event_date" type="DATE" jt="91" mandatory="y" >
+				<comment><![CDATA[Дата, на которую назначено событие]]></comment>
+			</column>
+			<column name="event_type" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Тип события]]></comment>
+			</column>
+			<index name="pk_events" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_topics user_id" unique="NORMAL" >
+				<column name="owner_id" />
+			</index>
+			<index name="fk_event_type_id" unique="NORMAL" >
+				<column name="event_type" />
+			</index>
+			<fk name="fk_event_type_id" to_schema="tripadvisor" to_table="event_types" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="event_type" pk="id" />
+			</fk>
+			<fk name="fk_topics user_id" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="owner_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="image_extensions" row_count="7" spec="" >
+			<comment><![CDATA[Форматы изображений]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор формата]]></comment>
+			</column>
+			<column name="extension" type="VARCHAR" length="4" jt="12" mandatory="y" >
+				<comment><![CDATA[Формат (расширение)]]></comment>
+			</column>
+			<column name="description" type="VARCHAR" length="1000" jt="12" >
+				<comment><![CDATA[Описание формата]]></comment>
+			</column>
+			<column name="active" type="TINYINT" jt="-6" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Активное расширение]]></comment>
+			</column>
+			<index name="pk_image_extensions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="images" row_count="150" spec="" >
+			<comment><![CDATA[Таблица ссылок на изображения]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор ссылки на изображение]]></comment>
+			</column>
+			<column name="url" type="VARCHAR" length="2000" jt="12" mandatory="y" >
+				<comment><![CDATA[Ссылка на изображение]]></comment>
+			</column>
+			<column name="description" type="TINYTEXT" jt="-1" >
+				<comment><![CDATA[Описание изображения]]></comment>
+			</column>
+			<column name="extension_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Формат изображения]]></comment>
+			</column>
+			<index name="pk_images" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_images image_extensions" unique="NORMAL" >
+				<column name="extension_id" />
+			</index>
+			<fk name="fk_images image_extensions" to_schema="tripadvisor" to_table="image_extensions" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="extension_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="sight_images" row_count="337" spec="" >
+			<comment><![CDATA[Изображения в рамках тура]]></comment>
+			<column name="sight_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор достопримечательности]]></comment>
+			</column>
+			<column name="image_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор изображения]]></comment>
+			</column>
+			<index name="pk_sight_images" unique="PRIMARY_KEY" >
+				<column name="sight_id" />
+				<column name="image_id" />
+			</index>
+			<index name="fk_sight_images_images" unique="NORMAL" >
+				<column name="image_id" />
+			</index>
+			<fk name="fk_sight_images_images" to_schema="tripadvisor" to_table="images" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="image_id" pk="id" />
+			</fk>
+			<fk name="fk_sight_images_sight" to_schema="tripadvisor" to_table="sights" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="sight_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="sights" row_count="180" spec="" >
+			<comment><![CDATA[Достопримечательности]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор достопримечательности]]></comment>
+			</column>
+			<column name="category_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Тип категории достопримечательности]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="500" jt="12" mandatory="y" >
+				<comment><![CDATA[Наименование]]></comment>
+			</column>
+			<column name="location" type="VARCHAR" length="1000" jt="12" >
+				<comment><![CDATA[Месторасположение]]></comment>
+			</column>
+			<column name="coordinates" type="JSON" jt="2000" >
+				<comment><![CDATA[Координаты]]></comment>
+			</column>
+			<column name="tour_id" type="BIGINT" jt="-5" unsigned="y" >
+				<comment><![CDATA[Идентификатор тура]]></comment>
+			</column>
+			<column name="description" type="TINYTEXT" jt="-1" >
+				<comment><![CDATA[Описание достопримечательности]]></comment>
+			</column>
+			<column name="price" type="DECIMAL" length="10" decimal="0" jt="3" >
+				<comment><![CDATA[Цена посещения]]></comment>
+			</column>
+			<column name="price_info" type="VARCHAR" length="200" jt="12" >
+				<comment><![CDATA[Информация о том, как расчитывается цена]]></comment>
+			</column>
+			<column name="url" type="VARCHAR" length="1000" jt="12" >
+				<comment><![CDATA[Адрес сайта о достопримечательности]]></comment>
+			</column>
+			<index name="pk_sights" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_sights_tours" unique="NORMAL" >
+				<column name="tour_id" />
+			</index>
+			<index name="fk_sights_dic$sight_categories" unique="NORMAL" >
+				<column name="category_id" />
+			</index>
+			<fk name="fk_sights_dic$sight_categories" to_schema="tripadvisor" to_table="dic$sight_categories" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="category_id" pk="id" />
+			</fk>
+			<fk name="fk_sights_tours" to_schema="tripadvisor" to_table="tours" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="tour_details" row_count="70" spec="" >
+			<comment><![CDATA[Таблица доп.информации о турах]]></comment>
+			<column name="tour_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор тура]]></comment>
+			</column>
+			<column name="review" type="TINYTEXT" jt="-1" >
+				<comment><![CDATA[Отзыв автора о туре]]></comment>
+			</column>
+			<column name="detail_info" type="VARCHAR" length="4000" jt="12" >
+				<comment><![CDATA[Дополнительная информация о туре]]></comment>
+			</column>
+			<column name="price" type="DECIMAL" length="10" decimal="0" jt="3" >
+				<comment><![CDATA[Цена за тур]]></comment>
+			</column>
+			<column name="coordinates" type="JSON" jt="2000" >
+				<comment><![CDATA[Координаты места]]></comment>
+			</column>
+			<column name="url" type="VARCHAR" length="500" jt="12" >
+				<comment><![CDATA[Ссылка на информационный сайт]]></comment>
+			</column>
+			<index name="pk_tour_details" unique="PRIMARY_KEY" >
+				<column name="tour_id" />
+			</index>
+			<fk name="fk_tour_details_tours" to_schema="tripadvisor" to_table="tours" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="tour_images" row_count="225" spec="" >
+			<comment><![CDATA[Изображения в рамках тура]]></comment>
+			<column name="tour_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор тура]]></comment>
+			</column>
+			<column name="image_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор изображения]]></comment>
+			</column>
+			<index name="pk_tour_images" unique="PRIMARY_KEY" >
+				<column name="tour_id" />
+				<column name="image_id" />
+			</index>
+			<index name="fk_tour_images_images" unique="NORMAL" >
+				<column name="image_id" />
+			</index>
+			<fk name="fk_tour_images_images" to_schema="tripadvisor" to_table="images" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="image_id" pk="id" />
+			</fk>
+			<fk name="fk_tour_images_tours" to_schema="tripadvisor" to_table="tours" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="tour_type" row_count="25" spec="" >
+			<comment><![CDATA[Справочник типов туров]]></comment>
+			<column name="id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор типа тура]]></comment>
+			</column>
+			<column name="name" type="VARCHAR" length="200" jt="12" mandatory="y" >
+				<comment><![CDATA[Тип тура]]></comment>
+			</column>
+			<column name="active" type="TINYINT" jt="-6" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Доступен к выбору/активный]]></comment>
+			</column>
+			<index name="pk_tour_type" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="tours" row_count="70" spec="" >
+			<comment><![CDATA[Туры, путешествия, турне, экскурсии, гастроли, поездки]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Идентификатор тура]]></comment>
+			</column>
+			<column name="user_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор пользователя (владельца)]]></comment>
+			</column>
+			<column name="tour_type" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Тип тура]]></comment>
+			</column>
+			<column name="about" type="VARCHAR" length="1000" jt="12" mandatory="y" >
+				<comment><![CDATA[Кратко о туре]]></comment>
+			</column>
+			<column name="start_date" type="DATE" jt="91" mandatory="y" >
+				<comment><![CDATA[Дата начала]]></comment>
+			</column>
+			<column name="end_date" type="DATE" jt="91" mandatory="y" >
+				<comment><![CDATA[Дата окончания]]></comment>
+			</column>
+			<column name="departure_location" type="VARCHAR" length="2000" jt="12" mandatory="y" >
+				<comment><![CDATA[Точка отправления (адрес)]]></comment>
+			</column>
+			<column name="destination_location" type="VARCHAR" length="2000" jt="12" mandatory="y" >
+				<comment><![CDATA[Точка назначения (адрес)]]></comment>
+			</column>
+			<column name="status_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Идентификатор статус тура]]></comment>
+			</column>
+			<index name="pk_tours" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="fk_tours_users" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<index name="fk_tours_dic$tour_statuses" unique="NORMAL" >
+				<column name="status_id" />
+			</index>
+			<index name="fk_tours_type_id" unique="NORMAL" >
+				<column name="tour_type" />
+			</index>
+			<fk name="fk_tours_dic$tour_statuses" to_schema="tripadvisor" to_table="dic$tour_statuses" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="status_id" pk="id" />
+			</fk>
+			<fk name="fk_tours_type_id" to_schema="tripadvisor" to_table="tour_type" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="tour_type" pk="id" />
+			</fk>
+			<fk name="fk_tours_users" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="user_details" row_count="58" spec="" >
+			<comment><![CDATA[Таблица расширенной информации по пользователе]]></comment>
+			<column name="user_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор пользователя]]></comment>
+			</column>
+			<column name="about" type="VARCHAR" length="4000" jt="12" >
+				<comment><![CDATA[О себе]]></comment>
+			</column>
+			<column name="address" type="VARCHAR" length="1000" jt="12" >
+				<comment><![CDATA[Адрес пользователя]]></comment>
+			</column>
+			<column name="coordinates" type="JSON" jt="2000" >
+				<comment><![CDATA[Месторасположение]]></comment>
+			</column>
+			<column name="sex" type="CHAR" length="1" jt="1" >
+				<comment><![CDATA[Пол пользователя]]></comment>
+			</column>
+			<column name="birth_date" type="DATE" jt="91" >
+				<comment><![CDATA[Дата рождения пользователя]]></comment>
+			</column>
+			<column name="email" type="VARCHAR" length="200" jt="12" mandatory="y" >
+				<comment><![CDATA[Адрес электронной почты]]></comment>
+			</column>
+			<column name="city_id" type="BIGINT" jt="-5" unsigned="y" >
+				<comment><![CDATA[Город проживания]]></comment>
+			</column>
+			<index name="pk_user_details" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+			</index>
+			<index name="fk_user_details_dic$cities" unique="NORMAL" >
+				<column name="city_id" />
+			</index>
+			<fk name="fk_user_details_dic$cities" to_schema="tripadvisor" to_table="dic$cities" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="city_id" pk="id" />
+			</fk>
+			<fk name="fk_user_details_users" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="user_roles" row_count="11" spec="" >
+			<comment><![CDATA[Описание прав пользователей]]></comment>
+			<column name="user_id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор пользователя]]></comment>
+			</column>
+			<column name="role_id" type="INT" jt="4" mandatory="y" unsigned="y" >
+				<comment><![CDATA[Идентификатор права]]></comment>
+			</column>
+			<index name="pk_user_roles" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+				<column name="role_id" />
+			</index>
+			<index name="fk_user_right_id" unique="NORMAL" >
+				<column name="role_id" />
+			</index>
+			<fk name="fk_user_right_id" to_schema="tripadvisor" to_table="dic$roles" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="role_id" pk="id" />
+			</fk>
+			<fk name="fk_user_rights_users" to_schema="tripadvisor" to_table="users" delete_action="restrict" update_action="restrict" options="" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<options><![CDATA[ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<table name="users" row_count="58" spec="" >
+			<comment><![CDATA[Таблица пользователей]]></comment>
+			<column name="id" type="BIGINT" jt="-5" mandatory="y" unsigned="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+				<comment><![CDATA[Уникальный идентификатор пользователя]]></comment>
+			</column>
+			<column name="login" type="VARCHAR" length="250" jt="12" mandatory="y" >
+				<comment><![CDATA[Логин пользователя]]></comment>
+			</column>
+			<column name="password" type="VARCHAR" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Пароль пользователя]]></comment>
+			</column>
+			<column name="displayname" type="VARCHAR" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Отображаемое имя на сайте]]></comment>
+			</column>
+			<column name="create_date" type="DATE" jt="91" mandatory="y" >
+				<defo><![CDATA[curdate()]]></defo>
+				<comment><![CDATA[Дата создания]]></comment>
+			</column>
+			<column name="register_date" type="DATE" jt="91" >
+				<comment><![CDATA[Дата регистрации пользователя]]></comment>
+			</column>
+			<column name="reg_confirmed" type="TINYINT" jt="-6" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Факт подтверждения регистрации]]></comment>
+			</column>
+			<index name="pk_users" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci]]></options>
+		</table>
+		<function name="add_role" id="Function-24b8" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `add_role`(inputJson TEXT) RETURNS json
+BEGIN
+    DECLARE id INT UNSIGNED; -- Role id
+    DECLARE error_code INT;
+    DECLARE error_message VARCHAR(1000);
+    DECLARE v_name VARCHAR(255);
+    DECLARE v_description VARCHAR(2000);
+    DECLARE v_active TINYINT;
+    DECLARE outputJson JSON;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+      GET DIAGNOSTICS CONDITION 1
+		@p2 = MESSAGE_TEXT;
+    
+	  SET error_code = -1;
+	  SET error_message = @p2;
+	  SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+      RETURN outputJson;
+	END;
+    
+    SET error_code = 0;
+    SET error_message = NULL;
+    
+    -- Parse the input JSON
+    SET v_name = TRIM(JSON_VALUE(inputJson->'$.name', '$'));
+    SET v_description = TRIM(JSON_VALUE(inputJson->'$.description', '$'));
+    SET v_active = TRIM(JSON_VALUE(inputJson->'$.active', '$'));
+    
+    IF LENGTH(v_name) = 0 THEN
+        SET error_code = -2;
+        SET error_message = 'Name is empty';
+    END IF;
+    
+    IF v_name is NULL THEN
+        SET error_code = -3;
+        SET error_message = 'Name is null';
+    END IF;
+    
+    IF LENGTH(v_description) = 0 THEN
+        SET error_code = -4;
+        SET error_message = 'Description is empty';
+    END IF;
+    
+    IF v_description is NULL THEN
+        SET error_code = -5;
+        SET error_message = 'Description is null';
+    END IF;
+    
+    IF error_code < 0 THEN
+        SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+		RETURN outputJson;
+    END IF;
+    
+    -- Insert into dic$roles table
+    INSERT INTO tripadvisor.dic$roles (name,description,active) VALUES (v_name,v_description,v_active);
+    SET id = LAST_INSERT_ID();
+    
+    -- Build the output JSON
+    SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+    
+    RETURN outputJson;
+END]]></string>
+		</function>
+		<function name="add_user" id="Function-1a97" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `add_user`(inputJson TEXT) RETURNS json
+BEGIN
+    DECLARE id BIGINT UNSIGNED; -- User id
+    DECLARE error_code INT;
+    DECLARE error_message VARCHAR(1000);
+    DECLARE v_role_id INT UNSIGNED;
+    DECLARE v_login VARCHAR(250);
+    DECLARE v_password VARCHAR(100);
+    DECLARE v_displayname VARCHAR(100);
+    DECLARE v_register_date DATE;
+    DECLARE v_about VARCHAR(4000);
+    DECLARE v_address VARCHAR(1000);
+    DECLARE v_coordinates VARCHAR(500);
+    DECLARE v_sex CHAR(1);
+    DECLARE v_birth_date DATE;
+    DECLARE v_email VARCHAR(200);
+    DECLARE v_city_id BIGINT UNSIGNED;
+    DECLARE v_city_id_check BIGINT UNSIGNED;
+    DECLARE outputJson JSON;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+      GET DIAGNOSTICS CONDITION 1
+		@p2 = MESSAGE_TEXT;
+    
+	  SET error_code = -1;
+	  SET error_message = @p2;
+	  SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+      RETURN outputJson;
+	END;
+    
+    SET error_code = 0;
+    SET error_message = NULL;
+    
+    -- Parse the input JSON
+    SET v_login = TRIM(JSON_VALUE(inputJson->'$.login', '$'));
+    SET v_password = TRIM(JSON_VALUE(inputJson->'$.password', '$'));
+    SET v_displayname = TRIM(JSON_VALUE(inputJson->'$.displayname', '$'));
+    SET v_register_date = TRIM(JSON_VALUE(inputJson->'$.register_date', '$'));
+    SET v_about = JSON_VALUE(inputJson->'$.about', '$');
+    SET v_address = TRIM(JSON_VALUE(inputJson->'$.address', '$'));
+    SET v_coordinates = TRIM(JSON_VALUE(inputJson->'$.coordinates', '$'));
+    SET v_sex = TRIM(JSON_VALUE(inputJson->'$.sex', '$'));
+    SET v_birth_date = TRIM(JSON_VALUE(inputJson->'$.birth_date', '$'));
+    SET v_email = TRIM(JSON_VALUE(inputJson->'$.email', '$'));
+    SET v_city_id = TRIM(JSON_VALUE(inputJson->'$.city_id', '$'));
+    SET v_role_id = TRIM(JSON_VALUE(inputJson->'$.role_id', '$'));
+    
+    IF LENGTH(v_login) = 0 THEN
+		SET error_code = -2;
+        SET error_message = 'Login is empty';   
+    END IF;
+    
+    IF v_login is NULL THEN
+        SET error_code = -3;
+        SET error_message = 'Login is null';
+    END IF;
+    
+    IF LENGTH(v_password) = 0 THEN
+        SET error_code = -4;
+        SET error_message = 'Password is empty';
+    END IF;
+    
+    IF v_password is NULL THEN
+        SET error_code = -5;
+        SET error_message = 'Password is null';
+    END IF;
+    
+    IF LENGTH(v_displayname) = 0 THEN
+        SET error_code = -6;
+        SET error_message = 'Displayname is empty';
+    END IF;
+    
+    IF v_displayname is NULL THEN
+        SET error_code = -7;
+        SET error_message = 'Displayname is null';
+    END IF;
+    
+    IF v_city_id is not NULL THEN
+		SELECT dc.id INTO v_city_id_check FROM tripadvisor.dic$cities dc WHERE dc.id = v_city_id;
+        
+		IF v_city_id_check is NULL THEN
+		  SET error_code = -8;
+		  SET error_message = 'Incorrect city identifier provided';		  
+		END IF;
+    END IF;
+    
+    IF LENGTH(v_role_id) = 0 THEN
+        SET error_code = -9;
+        SET error_message = 'User role is empty';
+    END IF;
+    
+    IF v_role_id is NULL THEN
+        SET error_code = -10;
+        SET error_message = 'User role is null';
+    END IF;
+    
+    IF error_code < 0 THEN
+        SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+		RETURN outputJson;
+    END IF;
+    
+    -- Insert into users table
+    INSERT INTO tripadvisor.users (login,password,displayname,register_date) VALUES (v_login,v_password,v_displayname,v_register_date);
+    SET id = LAST_INSERT_ID();
+    
+    -- Insert into user_details table
+    INSERT INTO tripadvisor.user_details (user_id,about,address,coordinates,sex,birth_date,email,city_id) VALUES (id,v_about,v_address,v_coordinates,v_sex,v_birth_date,v_email,v_city_id);
+    
+    -- Insert into user_roles table
+    INSERT INTO tripadvisor.user_roles (user_id,role_id) VALUES (id,v_role_id);
+    
+    -- Build the output JSON
+    SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+    
+    RETURN outputJson;
+END]]></string>
+		</function>
+		<function name="get_roles" id="Function-1a8f" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `get_roles`() RETURNS json
+    DETERMINISTIC
+BEGIN
+    DECLARE data JSON;
+
+    SELECT JSON_ARRAYAGG(JSON_OBJECT(
+        'id', dr.id,
+        'name', dr.name,
+        'description', dr.description,
+        'active', dr.active
+    )) JSON
+    INTO data
+    FROM tripadvisor.dic$roles dr;
+    
+    IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
+        SET data = JSON_ARRAY(); -- Set a default empty JSON array
+    END IF;
+
+    RETURN data;
+    END]]></string>
+		</function>
+		<function name="get_user_by_id" id="Function-ca6" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `get_user_by_id`(user_id BIGINT UNSIGNED) RETURNS json
+    DETERMINISTIC
+BEGIN
+    DECLARE data JSON;
+
+    SELECT JSON_OBJECT(
+        'id', us.id,
+        'login', us.login,
+        'displayname', us.displayname,
+        'create_date', us.create_date,
+        'reg_confirmed', us.reg_confirmed,
+        'about', usd.about,
+        'address', usd.address,
+        'about', usd.about,
+        'coordinates', usd.coordinates,
+        'sex', usd.sex,
+        'birth_date', usd.birth_date,
+        'email', usd.email,
+        'city', cty.name
+    ) JSON
+    INTO data
+    FROM tripadvisor.users us
+    INNER JOIN tripadvisor.user_details usd on usd.user_id=us.id
+    LEFT JOIN tripadvisor.dic$cities cty on usd.city_id = cty.id
+    WHERE us.id = user_id;
+    
+    IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
+        SET data = JSON_OBJECT(); -- Set a default empty JSON object
+    END IF;
+
+    RETURN data;
+    END]]></string>
+		</function>
+		<function name="get_user_role" id="Function-a82" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `get_user_role`(user_id BIGINT UNSIGNED) RETURNS json
+    DETERMINISTIC
+BEGIN
+    DECLARE data JSON;
+
+    SELECT JSON_OBJECT(
+        'id', us.id,
+        'role', dr.name,
+        'active', dr.active
+    ) JSON
+    INTO data
+    FROM tripadvisor.users us 
+    LEFT JOIN tripadvisor.user_roles ur on ur.user_id=us.id
+    LEFT JOIN tripadvisor.dic$roles dr on ur.role_id=dr.id
+    WHERE us.id = user_id;
+    
+    IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
+        SET data = JSON_OBJECT(); -- Set a default empty JSON object
+    END IF;
+
+    RETURN data;
+    END]]></string>
+		</function>
+		<function name="get_users" id="Function-1c88" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE  FUNCTION `get_users`(noffset INT UNSIGNED, nrows INT UNSIGNED) RETURNS json
+    DETERMINISTIC
+BEGIN
+    DECLARE data JSON;
+
+    SELECT JSON_ARRAYAGG(JSON_OBJECT(
+        'id', us.id,
+        'login', us.login,
+        'displayname', us.displayname,
+        'create_date', us.create_date,
+        'reg_confirmed', us.reg_confirmed,
+        'about', usd.about,
+        'address', usd.address,
+        'about', usd.about,
+        'coordinates', usd.coordinates,
+        'sex', usd.sex,
+        'birth_date', usd.birth_date,
+        'email', usd.email,
+        'city', cty.name
+    )) JSON
+    INTO data
+    FROM (SELECT id,login,displayname,create_date,reg_confirmed FROM tripadvisor.users ORDER BY ID ASC LIMIT nrows OFFSET noffset) us 
+    INNER JOIN tripadvisor.user_details usd on usd.user_id=us.id
+    LEFT JOIN tripadvisor.dic$cities cty on usd.city_id = cty.id;
+    
+    IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
+        SET data = JSON_ARRAY(); -- Set a default empty JSON array
+    END IF;
+
+    RETURN data;
+    END]]></string>
+		</function>
+	</schema>
+	<connector name="MySql" database="MySql" driver_class="com.mysql.cj.jdbc.Driver" driver_jar="mysql-connector-j-8.0.32.jar" driver_desc="Standard" host="localhost" port="3306" instance="tripadvisor" user="root" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-2154" show_relation="columns" >
+		<entity schema="tripadvisor" name="catering_images" color="BEBEF4" x="48" y="736" />
+		<entity schema="tripadvisor" name="caterings" color="BEBEF4" x="272" y="736" />
+		<entity schema="tripadvisor" name="comfort_images" color="D1BEF4" x="496" y="768" />
+		<entity schema="tripadvisor" name="comforts" color="D1BEF4" x="688" y="768" />
+		<entity schema="tripadvisor" name="dic$areas" color="C7F4BE" x="1760" y="464" />
+		<entity schema="tripadvisor" name="dic$cities" color="C7F4BE" x="1776" y="256" />
+		<entity schema="tripadvisor" name="dic$city_types" color="C7F4BE" x="1568" y="80" />
+		<entity schema="tripadvisor" name="dic$countries" color="C7F4BE" x="2144" y="256" />
+		<entity schema="tripadvisor" name="dic$regions" color="C7F4BE" x="1952" y="256" />
+		<entity schema="tripadvisor" name="dic$roles" color="F4DDBE" x="1136" y="736" />
+		<entity schema="tripadvisor" name="dic$sight_categories" color="BED3F4" x="544" y="496" />
+		<entity schema="tripadvisor" name="dic$street" color="C7F4BE" x="1952" y="464" />
+		<entity schema="tripadvisor" name="dic$street_types" color="C7F4BE" x="2128" y="464" />
+		<entity schema="tripadvisor" name="dic$tour_statuses" color="C7F4BE" x="1568" y="272" />
+		<entity schema="tripadvisor" name="event_comments" color="F4DDBE" x="1328" y="560" />
+		<entity schema="tripadvisor" name="event_location" color="F4DDBE" x="944" y="96" />
+		<entity schema="tripadvisor" name="event_members" color="F4DDBE" x="1328" y="304" />
+		<entity schema="tripadvisor" name="event_types" color="F4DDBE" x="1136" y="80" />
+		<entity schema="tripadvisor" name="events" color="F4DDBE" x="1136" y="304" />
+		<entity schema="tripadvisor" name="image_extensions" color="BED3F4" x="688" y="80" />
+		<entity schema="tripadvisor" name="images" color="BED3F4" x="480" y="80" />
+		<entity schema="tripadvisor" name="sight_images" color="BED3F4" x="576" y="368" />
+		<entity schema="tripadvisor" name="sights" color="BED3F4" x="400" y="368" />
+		<entity schema="tripadvisor" name="tour_details" color="BED3F4" x="48" y="368" />
+		<entity schema="tripadvisor" name="tour_images" color="BED3F4" x="240" y="368" />
+		<entity schema="tripadvisor" name="tour_type" color="BED3F4" x="80" y="176" />
+		<entity schema="tripadvisor" name="tours" color="BED3F4" x="240" y="80" />
+		<entity schema="tripadvisor" name="user_details" color="F4DDBE" x="928" y="560" />
+		<entity schema="tripadvisor" name="user_roles" color="F4DDBE" x="1136" y="560" />
+		<entity schema="tripadvisor" name="users" color="F4DDBE" x="928" y="304" />
+		<group name="catering_images" color="ECECF7" >
+			<entity schema="tripadvisor" name="catering_images" />
+			<entity schema="tripadvisor" name="caterings" />
+		</group>
+		<group name="comfort_images" color="F0ECF7" >
+			<entity schema="tripadvisor" name="comfort_images" />
+			<entity schema="tripadvisor" name="comforts" />
+		</group>
+		<group name="Dictionaries" color="EEF7EC" >
+			<entity schema="tripadvisor" name="dic$cities" />
+			<entity schema="tripadvisor" name="dic$regions" />
+			<entity schema="tripadvisor" name="dic$street" />
+			<entity schema="tripadvisor" name="dic$areas" />
+			<entity schema="tripadvisor" name="dic$tour_statuses" />
+			<entity schema="tripadvisor" name="dic$countries" />
+			<entity schema="tripadvisor" name="dic$street_types" />
+			<entity schema="tripadvisor" name="dic$city_types" />
+		</group>
+		<group name="Users" color="F7F2EC" >
+			<entity schema="tripadvisor" name="users" />
+			<entity schema="tripadvisor" name="events" />
+			<entity schema="tripadvisor" name="event_members" />
+			<entity schema="tripadvisor" name="user_roles" />
+			<entity schema="tripadvisor" name="event_comments" />
+			<entity schema="tripadvisor" name="user_details" />
+			<entity schema="tripadvisor" name="event_location" />
+			<entity schema="tripadvisor" name="event_types" />
+			<entity schema="tripadvisor" name="dic$roles" />
+		</group>
+		<group name="Tours" color="ECF0F7" >
+			<entity schema="tripadvisor" name="tours" />
+			<entity schema="tripadvisor" name="images" />
+			<entity schema="tripadvisor" name="tour_images" />
+			<entity schema="tripadvisor" name="image_extensions" />
+			<entity schema="tripadvisor" name="tour_details" />
+			<entity schema="tripadvisor" name="tour_type" />
+			<entity schema="tripadvisor" name="sights" />
+			<entity schema="tripadvisor" name="dic$sight_categories" />
+			<entity schema="tripadvisor" name="sight_images" />
+		</group>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-135b" show_column_type="y" show_relation="columns" >
+		<entity schema="tripadvisor" name="catering_images" color="BEBEF4" x="1184" y="864" />
+		<entity schema="tripadvisor" name="caterings" color="BEBEF4" x="1408" y="864" />
+		<entity schema="tripadvisor" name="comfort_images" color="D1BEF4" x="48" y="864" />
+		<entity schema="tripadvisor" name="comforts" color="D1BEF4" x="272" y="864" />
+		<entity schema="tripadvisor" name="dic$areas" color="C7F4BE" x="2208" y="432" />
+		<entity schema="tripadvisor" name="dic$cities" color="C7F4BE" x="2240" y="224" />
+		<entity schema="tripadvisor" name="dic$city_types" color="C7F4BE" x="2000" y="48" />
+		<entity schema="tripadvisor" name="dic$countries" color="C7F4BE" x="2752" y="224" />
+		<entity schema="tripadvisor" name="dic$regions" color="C7F4BE" x="2480" y="224" />
+		<entity schema="tripadvisor" name="dic$roles" color="F4DDBE" x="1696" y="64" />
+		<entity schema="tripadvisor" name="dic$sight_categories" color="BED3F4" x="912" y="640" />
+		<entity schema="tripadvisor" name="dic$street" color="C7F4BE" x="2480" y="432" />
+		<entity schema="tripadvisor" name="dic$street_types" color="C7F4BE" x="2720" y="432" />
+		<entity schema="tripadvisor" name="dic$tour_statuses" color="C7F4BE" x="2000" y="240" />
+		<entity schema="tripadvisor" name="event_comments" color="F4DDBE" x="1696" y="528" />
+		<entity schema="tripadvisor" name="event_location" color="F4DDBE" x="1200" y="64" />
+		<entity schema="tripadvisor" name="event_members" color="F4DDBE" x="1696" y="272" />
+		<entity schema="tripadvisor" name="event_types" color="F4DDBE" x="1456" y="48" />
+		<entity schema="tripadvisor" name="events" color="F4DDBE" x="1456" y="272" />
+		<entity schema="tripadvisor" name="image_extensions" color="BED3F4" x="880" y="48" />
+		<entity schema="tripadvisor" name="images" color="BED3F4" x="640" y="48" />
+		<entity schema="tripadvisor" name="sight_images" color="BED3F4" x="912" y="336" />
+		<entity schema="tripadvisor" name="sights" color="BED3F4" x="640" y="336" />
+		<entity schema="tripadvisor" name="tour_details" color="BED3F4" x="48" y="336" />
+		<entity schema="tripadvisor" name="tour_images" color="BED3F4" x="320" y="336" />
+		<entity schema="tripadvisor" name="tour_type" color="BED3F4" x="80" y="144" />
+		<entity schema="tripadvisor" name="tours" color="BED3F4" x="320" y="48" />
+		<entity schema="tripadvisor" name="user_details" color="F4DDBE" x="1184" y="528" />
+		<entity schema="tripadvisor" name="user_roles" color="F4DDBE" x="1456" y="528" />
+		<entity schema="tripadvisor" name="users" color="F4DDBE" x="1184" y="272" />
+		<script name="SQL Editor" id="Editor-1a56" language="SQL" >
+			<string><![CDATA[SELECT
+	id, user_id, tour_type, about, start_date, end_date, departure_location, destination_location, status_id
+FROM
+	tripadvisor.tours s;]]></string>
+		</script>
+		<browser id="Browse-169a" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="tripadvisor" entity="tours" x="20" y="20" width="400" height="300" >
+				<browse_table schema="tripadvisor" entity="caterings" fk="fk_caterings_tours" x="440" y="20" width="500" height="350" >
+					<browse_table schema="tripadvisor" entity="catering_images" fk="fk_catering_images_caterings" x="960" y="20" width="500" height="350" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query-11ee" name="Query Builder" >
+			<query_table schema="tripadvisor" name="tours" alias="t" x="48" y="48" >
+				<column name="id" />
+				<column name="user_id" />
+				<column name="tour_type" />
+				<column name="about" />
+				<column name="start_date" />
+				<column name="end_date" />
+				<column name="departure_location" />
+				<column name="destination_location" />
+				<column name="status_id" />
+				<query_table schema="tripadvisor" name="caterings" alias="c" x="288" y="48" fk="fk_caterings_tours" type="Inner Join" >
+					<column name="id" />
+					<column name="tour_id" />
+					<column name="name" />
+					<column name="description" />
+					<column name="visit_date" />
+					<column name="rating" />
+					<column name="price" />
+					<query_table schema="tripadvisor" name="catering_images" alias="ci" x="480" y="48" fk="fk_catering_images_caterings" type="Inner Join" >
+						<column name="catering_id" />
+						<column name="image_id" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-17fb" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Tours Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="id" type="-5" />
+						<var name="user_id" type="-5" />
+						<var name="tour_type" type="4" />
+						<var name="about" />
+						<var name="start_date" type="91" />
+						<var name="end_date" type="91" />
+						<var name="departure_location" />
+						<var name="destination_location" />
+						<var name="status_id" type="4" />
+						<script ><![CDATA[SELECT * FROM tripadvisor.tours]]></script>
+					</form_script>
+					<param name="i0" value="destination_location" />
+					<param name="width" value="100%" />
+					<param name="v0" value="status_id" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="id" type="-5" />
+						<var name="user_id" type="-5" />
+						<var name="tour_type" type="4" />
+						<var name="about" />
+						<var name="start_date" type="91" />
+						<var name="end_date" type="91" />
+						<var name="departure_location" />
+						<var name="destination_location" />
+						<var name="status_id" type="4" />
+						<script ><![CDATA[SELECT * FROM tripadvisor.tours]]></script>
+					</form_script>
+					<cell type="label" name="id" pos="0,0,0,0,c,c" />
+					<cell type="label" name="user_id" pos="1,0,1,0,c,c" />
+					<cell type="label" name="tour_type" pos="2,0,2,0,c,c" />
+					<cell type="label" name="about" pos="3,0,3,0,c,c" />
+					<cell type="label" name="start_date" pos="4,0,4,0,c,c" />
+					<cell type="label" name="end_date" pos="5,0,5,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="6,0,6,0,c,c" />
+					<cell type="label" name="${id}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${user_id}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${tour_type}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${about}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${start_date}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${end_date}" template="Plain" pos="5,1,5,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="6,1,6,1,c,c" ref_id="Report-17fb" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-17fb" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-17fb" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-17fb" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>
