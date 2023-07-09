@@ -409,3 +409,223 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS tripadvisor.set_user_role$$
+CREATE FUNCTION tripadvisor.set_user_role(inputJson TEXT)
+RETURNS JSON
+BEGIN
+    DECLARE id BIGINT UNSIGNED; -- User id
+    DECLARE error_code INT;
+    DECLARE error_message VARCHAR(1000);
+    DECLARE v_role_id INT UNSIGNED;
+	DECLARE v_id BIGINT UNSIGNED; -- User id
+    DECLARE outputJson JSON;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+      GET DIAGNOSTICS CONDITION 1
+		@p2 = MESSAGE_TEXT;
+    
+	  SET error_code = -1;
+	  SET error_message = @p2;
+	  SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+      RETURN outputJson;
+	END;
+    
+    SET error_code = 0;
+    SET error_message = NULL;
+    
+    -- Parse the input JSON
+    SET v_id = TRIM(JSON_VALUE(inputJson->'$.id', '$'));
+    SET v_role_id = TRIM(JSON_VALUE(inputJson->'$.role_id', '$'));
+    
+    IF LENGTH(v_id) = 0 THEN
+		SET error_code = -2;
+        SET error_message = 'ID is empty';   
+    END IF;
+    
+    IF v_id is NULL THEN
+        SET error_code = -3;
+        SET error_message = 'ID is null';
+    END IF;
+    
+    IF LENGTH(v_role_id) = 0 THEN
+        SET error_code = -4;
+        SET error_message = 'Role identifier is empty';
+    END IF;
+    
+    IF v_role_id is NULL THEN
+        SET error_code = -5;
+        SET error_message = 'Role identifier is null';
+    END IF;
+    
+    IF error_code < 0 THEN
+        SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+		RETURN outputJson;
+    END IF;
+    
+    -- Update users table
+    UPDATE tripadvisor.users us set us.role_id=v_role_id
+	WHERE us.id = v_id;
+	
+	SET id = v_id;
+
+    -- Build the output JSON
+    SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+    
+    RETURN outputJson;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS tripadvisor.update_user$$
+CREATE FUNCTION tripadvisor.update_user(inputJson TEXT)
+RETURNS JSON
+BEGIN
+    DECLARE id BIGINT UNSIGNED; -- User id
+    DECLARE error_code INT;
+    DECLARE error_message VARCHAR(1000);    
+	DECLARE v_id BIGINT UNSIGNED; -- User id
+	DECLARE v_role_id INT UNSIGNED;
+    DECLARE v_login VARCHAR(250);
+    DECLARE v_password VARCHAR(100);
+    DECLARE v_displayname VARCHAR(100);
+    DECLARE v_register_date DATE;
+    DECLARE v_about VARCHAR(4000);
+    DECLARE v_address VARCHAR(1000);
+    DECLARE v_coordinates VARCHAR(500);
+    DECLARE v_sex CHAR(1);
+    DECLARE v_birth_date DATE;
+    DECLARE v_email VARCHAR(200);
+    DECLARE v_city_id BIGINT UNSIGNED;
+    DECLARE v_city_id_check BIGINT UNSIGNED;
+    DECLARE outputJson JSON;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+      GET DIAGNOSTICS CONDITION 1
+		@p2 = MESSAGE_TEXT;
+    
+	  SET error_code = -1;
+	  SET error_message = @p2;
+	  SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+      RETURN outputJson;
+	END;
+    
+    SET error_code = 0;
+    SET error_message = NULL;
+    
+    -- Parse the input JSON
+	SET v_id = TRIM(JSON_VALUE(inputJson->'$.id', '$'));
+    SET v_login = TRIM(JSON_VALUE(inputJson->'$.login', '$'));
+    SET v_password = TRIM(JSON_VALUE(inputJson->'$.password', '$'));
+    SET v_displayname = TRIM(JSON_VALUE(inputJson->'$.displayname', '$'));
+    SET v_register_date = TRIM(JSON_VALUE(inputJson->'$.register_date', '$'));
+    SET v_about = JSON_VALUE(inputJson->'$.about', '$');
+    SET v_address = TRIM(JSON_VALUE(inputJson->'$.address', '$'));
+    SET v_coordinates = TRIM(JSON_VALUE(inputJson->'$.coordinates', '$'));
+    SET v_sex = TRIM(JSON_VALUE(inputJson->'$.sex', '$'));
+    SET v_birth_date = TRIM(JSON_VALUE(inputJson->'$.birth_date', '$'));
+    SET v_email = TRIM(JSON_VALUE(inputJson->'$.email', '$'));
+    SET v_city_id = TRIM(JSON_VALUE(inputJson->'$.city_id', '$'));
+    SET v_role_id = TRIM(JSON_VALUE(inputJson->'$.role_id', '$'));
+    
+    IF LENGTH(v_login) = 0 THEN
+		SET error_code = -2;
+        SET error_message = 'Login is empty';   
+    END IF;
+    
+    IF v_login is NULL THEN
+        SET error_code = -3;
+        SET error_message = 'Login is null';
+    END IF;
+    
+    IF LENGTH(v_password) = 0 THEN
+        SET error_code = -4;
+        SET error_message = 'Password is empty';
+    END IF;
+    
+    IF v_password is NULL THEN
+        SET error_code = -5;
+        SET error_message = 'Password is null';
+    END IF;
+    
+    IF LENGTH(v_displayname) = 0 THEN
+        SET error_code = -6;
+        SET error_message = 'Displayname is empty';
+    END IF;
+    
+    IF v_displayname is NULL THEN
+        SET error_code = -7;
+        SET error_message = 'Displayname is null';
+    END IF;
+    
+    IF v_city_id is not NULL THEN
+		SELECT dc.id INTO v_city_id_check FROM tripadvisor.dic$cities dc WHERE dc.id = v_city_id;
+        
+		IF v_city_id_check is NULL THEN
+		  SET error_code = -8;
+		  SET error_message = 'Incorrect city identifier provided';		  
+		END IF;
+    END IF;
+    
+    IF LENGTH(v_role_id) = 0 THEN
+        SET error_code = -9;
+        SET error_message = 'User role is empty';
+    END IF;
+    
+    IF v_role_id is NULL THEN
+        SET error_code = -10;
+        SET error_message = 'User role is null';
+    END IF;
+    
+	IF LENGTH(v_id) = 0 THEN
+        SET error_code = -11;
+        SET error_message = 'User identifier is empty';
+    END IF;
+    
+    IF v_id is NULL THEN
+        SET error_code = -12;
+        SET error_message = 'User identifier is null';
+    END IF;
+	
+    IF error_code < 0 THEN
+        SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+		RETURN outputJson;
+    END IF;
+    
+    -- Update users table
+    UPDATE tripadvisor.users us 
+	set 
+	  login = v_login,
+	  password = v_password,
+	  displayname = v_displayname,
+	  register_date = v_register_date,
+	  role_id = v_role_id
+	WHERE us.id = v_id;
+	
+	-- Update user_details table
+    UPDATE tripadvisor.user_details ud 
+	set 
+	  about = v_about,
+	  address = v_address,
+	  coordinates = v_coordinates,
+	  sex = v_sex,
+	  birth_date = v_birth_date,
+	  email = v_email,
+	  city_id = v_city_id
+	WHERE ud.user_id = v_id;
+	
+	SET id = v_id;
+
+    -- Build the output JSON
+    SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+    
+    RETURN outputJson;
+END$$
+
+DELIMITER ;
