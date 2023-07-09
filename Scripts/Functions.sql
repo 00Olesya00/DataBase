@@ -1,7 +1,7 @@
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS get_roles;
-CREATE FUNCTION get_roles() RETURNS JSON
+DROP FUNCTION IF EXISTS tripadvisor.get_roles$$
+CREATE FUNCTION tripadvisor.get_roles() RETURNS JSON
     DETERMINISTIC
     BEGIN
     DECLARE data JSON;
@@ -26,8 +26,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS get_user_by_id;
-CREATE FUNCTION get_user_by_id(user_id BIGINT UNSIGNED) RETURNS JSON
+DROP FUNCTION IF EXISTS tripadvisor.get_user_by_id$$
+CREATE FUNCTION tripadvisor.get_user_by_id(user_id BIGINT UNSIGNED) RETURNS JSON
     DETERMINISTIC
     BEGIN
     DECLARE data JSON;
@@ -45,11 +45,14 @@ CREATE FUNCTION get_user_by_id(user_id BIGINT UNSIGNED) RETURNS JSON
         'sex', usd.sex,
         'birth_date', usd.birth_date,
         'email', usd.email,
-        'city', cty.name
+        'city', cty.name,
+        'role_id', usd.role_id,
+        'role', dr.name
     ) JSON
     INTO data
     FROM tripadvisor.users us
     INNER JOIN tripadvisor.user_details usd on usd.user_id=us.id
+    INNER JOIN tripadvisor.dic$roles dr on usd.role_id=dr.id
     LEFT JOIN tripadvisor.dic$cities cty on usd.city_id = cty.id
     WHERE us.id = user_id;
     
@@ -64,31 +67,50 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS get_users;
-CREATE FUNCTION get_users(noffset INT UNSIGNED, nrows INT UNSIGNED) RETURNS JSON
+DROP FUNCTION IF EXISTS tripadvisor.get_users$$
+CREATE FUNCTION tripadvisor.get_users(noffset INT UNSIGNED, nrows INT UNSIGNED) RETURNS JSON
     DETERMINISTIC
     BEGIN
     DECLARE data JSON;
 
-    SELECT JSON_ARRAYAGG(JSON_OBJECT(
-        'id', us.id,
-        'login', us.login,
-        'displayname', us.displayname,
-        'create_date', us.create_date,
-        'reg_confirmed', us.reg_confirmed,
-        'about', usd.about,
-        'address', usd.address,
-        'about', usd.about,
-        'coordinates', usd.coordinates,
-        'sex', usd.sex,
-        'birth_date', usd.birth_date,
-        'email', usd.email,
-        'city', cty.name
-    )) JSON
-    INTO data
-    FROM (SELECT id,login,displayname,create_date,reg_confirmed FROM tripadvisor.users ORDER BY ID ASC LIMIT nrows OFFSET noffset) us 
-    INNER JOIN tripadvisor.user_details usd on usd.user_id=us.id
-    LEFT JOIN tripadvisor.dic$cities cty on usd.city_id = cty.id;
+SELECT 
+    JSON_ARRAYAGG(JSON_OBJECT('id',
+                    us.id,
+                    'login',
+                    us.login,
+                    'displayname',
+                    us.displayname,
+                    'create_date',
+                    us.create_date,
+                    'reg_confirmed',
+                    us.reg_confirmed,
+                    'about',
+                    usd.about,
+                    'address',
+                    usd.address,
+                    'about',
+                    usd.about,
+                    'coordinates',
+                    usd.coordinates,
+                    'sex',
+                    usd.sex,
+                    'birth_date',
+                    usd.birth_date,
+                    'email',
+                    usd.email,
+                    'city',
+                    cty.name)) JSON
+INTO data FROM
+    (SELECT 
+        id, login, displayname, create_date, reg_confirmed
+    FROM
+        tripadvisor.users
+    ORDER BY ID ASC
+    LIMIT NROWS OFFSET NOFFSET) us
+        INNER JOIN
+    tripadvisor.user_details usd ON usd.user_id = us.id
+        LEFT JOIN
+    tripadvisor.dic$cities cty ON usd.city_id = cty.id;
     
     IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
         SET data = JSON_ARRAY(); -- Set a default empty JSON array
@@ -101,21 +123,21 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS get_user_role;
-CREATE FUNCTION get_user_role(user_id BIGINT UNSIGNED) RETURNS JSON
+DROP FUNCTION IF EXISTS tripadvisor.get_user_role$$
+CREATE FUNCTION tripadvisor.get_user_role(user_id BIGINT UNSIGNED) RETURNS JSON
     DETERMINISTIC
     BEGIN
     DECLARE data JSON;
 
     SELECT JSON_OBJECT(
         'id', us.id,
+        'role_id', us.role_id,
         'role', dr.name,
         'active', dr.active
     ) JSON
     INTO data
     FROM tripadvisor.users us 
-    LEFT JOIN tripadvisor.user_roles ur on ur.user_id=us.id
-    LEFT JOIN tripadvisor.dic$roles dr on ur.role_id=dr.id
+    LEFT JOIN tripadvisor.dic$roles dr on us.role_id=dr.id
     WHERE us.id = user_id;
     
     IF data IS NULL OR JSON_LENGTH(data) = 0 THEN
@@ -129,8 +151,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS add_role;
-CREATE FUNCTION add_role(inputJson TEXT)
+DROP FUNCTION IF EXISTS tripadvisor.add_role$$
+CREATE FUNCTION tripadvisor.add_role(inputJson TEXT)
 RETURNS JSON
 BEGIN
     DECLARE id INT UNSIGNED; -- Role id
@@ -199,8 +221,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP FUNCTION IF EXISTS add_user;
-CREATE FUNCTION add_user(inputJson TEXT)
+DROP FUNCTION IF EXISTS tripadvisor.add_user$$
+CREATE FUNCTION tripadvisor.add_user(inputJson TEXT)
 RETURNS JSON
 BEGIN
     DECLARE id BIGINT UNSIGNED; -- User id
@@ -304,15 +326,82 @@ BEGIN
     END IF;
     
     -- Insert into users table
-    INSERT INTO tripadvisor.users (login,password,displayname,register_date) VALUES (v_login,v_password,v_displayname,v_register_date);
+    INSERT INTO tripadvisor.users (login,password,displayname,register_date,role_id) VALUES (v_login,v_password,v_displayname,v_register_date,v_role_id);
     SET id = LAST_INSERT_ID();
     
     -- Insert into user_details table
     INSERT INTO tripadvisor.user_details (user_id,about,address,coordinates,sex,birth_date,email,city_id) VALUES (id,v_about,v_address,v_coordinates,v_sex,v_birth_date,v_email,v_city_id);
+
+    -- Build the output JSON
+    SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
     
-    -- Insert into user_roles table
-    INSERT INTO tripadvisor.user_roles (user_id,role_id) VALUES (id,v_role_id);
+    RETURN outputJson;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS tripadvisor.register_user$$
+CREATE FUNCTION tripadvisor.register_user(inputJson TEXT)
+RETURNS JSON
+BEGIN
+    DECLARE id BIGINT UNSIGNED; -- User id
+    DECLARE error_code INT;
+    DECLARE error_message VARCHAR(1000);
+    DECLARE v_register_date DATE;
+	DECLARE v_id BIGINT UNSIGNED; -- User id
+    DECLARE outputJson JSON;
     
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+      GET DIAGNOSTICS CONDITION 1
+		@p2 = MESSAGE_TEXT;
+    
+	  SET error_code = -1;
+	  SET error_message = @p2;
+	  SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+      RETURN outputJson;
+	END;
+    
+    SET error_code = 0;
+    SET error_message = NULL;
+    
+    -- Parse the input JSON
+    SET v_id = TRIM(JSON_VALUE(inputJson->'$.id', '$'));
+    SET v_register_date = TRIM(JSON_VALUE(inputJson->'$.register_date', '$'));
+    
+    IF LENGTH(v_id) = 0 THEN
+		SET error_code = -2;
+        SET error_message = 'ID is empty';   
+    END IF;
+    
+    IF v_id is NULL THEN
+        SET error_code = -3;
+        SET error_message = 'ID is null';
+    END IF;
+    
+    IF LENGTH(v_register_date) = 0 THEN
+        SET error_code = -4;
+        SET error_message = 'Register date is empty';
+    END IF;
+    
+    IF v_register_date is NULL THEN
+        SET error_code = -5;
+        SET error_message = 'Register date is null';
+    END IF;
+    
+    IF error_code < 0 THEN
+        SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
+		RETURN outputJson;
+    END IF;
+    
+    -- Update users table
+    UPDATE tripadvisor.users us set us.register_date=v_register_date
+	WHERE us.id = v_id;
+	
+	SET id = v_id;
+
     -- Build the output JSON
     SET outputJson = JSON_OBJECT('id', id, 'error', JSON_OBJECT('code',error_code,'message',error_message));
     
