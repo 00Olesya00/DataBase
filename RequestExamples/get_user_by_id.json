@@ -1,0 +1,17 @@
+{
+    "id": 1,
+    "sex": "M",
+    "city": "Milwaukee",
+    "about": "Tony has free time. Anne is walking. Tony bought new car. Tony bought new car. Tony is shopping. ",
+    "email": "jftf@b-d-un.com",
+    "login": "Abel",
+    "address": "84 West Rocky Old Street",
+    "birth_date": "2003-07-14",
+    "coordinates": {
+        "lat": 16.0,
+        "lon": 84.0
+    },
+    "create_date": "2014-08-12",
+    "displayname": "Stephen",
+    "reg_confirmed": 0
+}
